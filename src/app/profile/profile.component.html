@@ -1,0 +1,46 @@
+<main class="main">
+  <div class="content">
+    <div class="container">
+      <h1>Profile</h1>
+      <form (ngSubmit)="onSave()" #profileForm="ngForm">
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" [(ngModel)]="username" name="username" required />
+        </mat-form-field>
+
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>New Password</mat-label>
+          <input matInput type="password" [(ngModel)]="password" name="password" />
+        </mat-form-field>
+
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" [(ngModel)]="confirmPassword" name="confirmPassword" />
+        </mat-form-field>
+
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Select up to 5 Currencies</mat-label>
+          <mat-select [(ngModel)]="selectedCurrencies" name="selectedCurrencies" multiple>
+            <mat-option *ngFor="let currency of currencies" [value]="currency.name">
+              {{ currency.name }} ({{ currency.symbol }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Favorite Currency</mat-label>
+          <mat-select [(ngModel)]="favoriteCurrency" name="favoriteCurrency">
+            <mat-option *ngFor="let currency of currencies" [value]="currency.name">
+              {{ currency.name }} ({{ currency.symbol }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="form-group buttons">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!profileForm.valid">Save</button>
+          <button mat-button color="warn" type="button" (click)="onLogout()">Log Out</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

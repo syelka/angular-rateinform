@@ -1,0 +1,35 @@
+<main class="main">
+  <div class="container">
+    <h1>Currency Converter</h1>
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>From</mat-label>
+        <mat-select [(value)]="fromCurrency">
+          <mat-option *ngFor="let currency of currencies" [value]="currency.name">
+            {{ currency.name }} ({{ currency.symbol }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>To</mat-label>
+        <mat-select [(value)]="toCurrency">
+          <mat-option *ngFor="let currency of currencies" [value]="currency.name">
+            {{ currency.name }} ({{ currency.symbol }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" [(ngModel)]="amount" />
+      </mat-form-field>
+    </div>
+    <div *ngIf="convertedAmount" class="result">
+      {{ convertedAmount | number:'1.2-2' }} {{ toCurrency }}
+    </div>
+    <button mat-raised-button color="primary" (click)="convert()">Convert</button>
+  </div>
+</main>

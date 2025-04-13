@@ -1,0 +1,97 @@
+@import '../../styles.scss';
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary;
+  padding: 0 20px;
+  color: $light;
+
+  .cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+
+    span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: $light;
+    }
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+
+    a {
+      text-decoration: none;
+      color: $light;
+
+      li {
+        cursor: pointer;
+        padding: 10px 20px;
+
+        &:hover {
+          background-color: $light-accent;
+          color: $dark;
+        }
+      }
+    }
+
+    &.open {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+  }
+
+  .user {
+    padding-left: 20px;
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+
+    .hamburger {
+      display: flex;
+    }
+
+    .user {
+      display: none;
+
+      &.open {
+        display: block;
+      }
+    }
+
+    ul {
+      display: none;
+
+      &.open {
+        display: flex;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<main class="main">
+  <div class="content">
+    <div class="container">
+      <h1>Login</h1>
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" id="email" name="email" [(ngModel)]="email" required>
+        </mat-form-field>
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" id="password" name="password" [(ngModel)]="password" required>
+        </mat-form-field>
+        <div class="form-group buttons">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+          <button mat-button color="accent" routerLink="/register">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

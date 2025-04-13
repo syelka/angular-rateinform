@@ -1,0 +1,23 @@
+<main class="main">
+    <div class="container">
+      <h1>RateInform</h1>
+      <p>Welcome to RateInform!<br>
+      We are here to help you with your rate information needs.<br>
+      Feel free to explore our features and let us know if you have any questions.</p>
+    </div>
+
+      <div *ngIf="isLoggedIn" class="container">
+        <h2>Your Selected Currencies</h2>
+        <div class="currencies">
+        <div class="currency-card" *ngFor="let currency of currencyTable">
+          <div class="currency">
+            <div class="currency-symbol">{{ currency.symbol }}</div>
+            <div class="currency-name">{{ currency.name }}</div>
+          </div>
+          <div class="currency-converted">
+            {{ currency.convertedAmount | number: '1.2-2' }} {{ favoriteCurrency }}
+          </div>
+        </div>
+      </div>
+      </div>
+</main>

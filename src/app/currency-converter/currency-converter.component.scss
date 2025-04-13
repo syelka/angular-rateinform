@@ -1,0 +1,35 @@
+@import '../../styles';
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: auto;
+
+  .form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h2 {
+    margin-top: 20px;
+    color: $dark;
+    text-align: center;
+  }
+
+  .result {
+    margin-bottom: 20px;
+    color: $dark;
+  }
+}

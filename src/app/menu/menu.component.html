@@ -1,0 +1,19 @@
+<nav class="nav">
+  <div class="cont">
+    <div class="h1">RateInform</div>
+    <div class="hamburger" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <ul [ngClass]="{'open': menuOpen}">
+    <a routerLink="/"><li>Home</li></a>
+    <a routerLink="/rates"><li>Rates</li></a>
+    <a routerLink="/profile"><li>Profile</li></a>
+    <a *ngIf="!isLoggedIn" routerLink="/login"><li>Login</li></a>
+  </ul>
+  <div [ngClass]="{'open': menuOpen}" class="user" *ngIf="isLoggedIn">
+    <span>{{ username }}</span>
+  </div>
+</nav>

@@ -1,0 +1,29 @@
+<main class="main">
+  <div class="content">
+    <div class="container">
+      <h1>Register</h1>
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" id="username" name="username" [(ngModel)]="username" required>
+        </mat-form-field>
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" id="email" name="email" [(ngModel)]="email" required>
+        </mat-form-field>
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" id="password" name="password" [(ngModel)]="password" required>
+        </mat-form-field>
+        <mat-form-field class="form-group" appearance="fill">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required>
+        </mat-form-field>
+        <div class="form-group buttons">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">Register</button>
+          <button mat-button color="accent" routerLink="/login">Back to Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

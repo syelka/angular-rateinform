@@ -1,0 +1,56 @@
+@import '../../styles';
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  padding: 70px 0;
+  gap: 30px;
+}
+
+p {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 60%;
+
+  .currencies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+
+    .currency-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      border: 2px solid $light-accent;
+      width: 200px;
+      text-align: center;
+
+      .currency-name {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .currency-symbol {
+        color: $dark;
+        margin-bottom: 10px;
+      }
+
+      .currency-converted {
+        color: $dark;
+      }
+    }
+  }
+}

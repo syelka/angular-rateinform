@@ -1,44 +1,48 @@
 <main class="main">
   <div class="content">
     <div class="container">
-      <h1>Profile</h1>
-      <form (ngSubmit)="onSave()" #profileForm="ngForm">
+      <h1>Profil</h1>
+      <div *ngIf="isLoading" class="spinner-container">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+
+      <form *ngIf="!isLoading" [formGroup]="profileForm" (ngSubmit)="onSave()">
         <mat-form-field class="form-group" appearance="fill">
-          <mat-label>Username</mat-label>
-          <input matInput type="text" [(ngModel)]="username" name="username" required />
+          <mat-label>Felhasználónév</mat-label>
+          <input matInput type="text" formControlName="username" readonly>
         </mat-form-field>
 
         <mat-form-field class="form-group" appearance="fill">
-          <mat-label>New Password</mat-label>
-          <input matInput type="password" [(ngModel)]="password" name="password" />
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" readonly>
         </mat-form-field>
 
         <mat-form-field class="form-group" appearance="fill">
-          <mat-label>Confirm Password</mat-label>
-          <input matInput type="password" [(ngModel)]="confirmPassword" name="confirmPassword" />
-        </mat-form-field>
-
-        <mat-form-field class="form-group" appearance="fill">
-          <mat-label>Select up to 5 Currencies</mat-label>
-          <mat-select [(ngModel)]="selectedCurrencies" name="selectedCurrencies" multiple>
-            <mat-option *ngFor="let currency of currencies" [value]="currency.name">
+          <mat-label>Kedvenc deviza</mat-label>
+          <mat-select formControlName="favoriteCurrency">
+            <mat-option *ngFor="let currency of availableCurrencies" [value]="currency.name">
               {{ currency.name }} ({{ currency.symbol }})
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="form-group" appearance="fill">
-          <mat-label>Favorite Currency</mat-label>
-          <mat-select [(ngModel)]="favoriteCurrency" name="favoriteCurrency">
-            <mat-option *ngFor="let currency of currencies" [value]="currency.name">
+          <mat-label>Követett devizák (max. 5)</mat-label>
+          <mat-select formControlName="selectedCurrencies" multiple>
+            <mat-option *ngFor="let currency of availableCurrencies" [value]="currency.name">
               {{ currency.name }} ({{ currency.symbol }})
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <div class="form-group buttons">
-          <button mat-raised-button color="primary" type="submit" [disabled]="!profileForm.valid">Save</button>
-          <button mat-button color="warn" type="button" (click)="onLogout()">Log Out</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid || isLoading">
+            <span *ngIf="!isLoading">Mentés</span>
+            <span *ngIf="isLoading">Mentés...</span>
+          </button>
+          <button mat-button color="warn" type="button" (click)="onLogout()" [disabled]="isLoading">
+            Kijelentkezés
+          </button>
         </div>
       </form>
     </div>

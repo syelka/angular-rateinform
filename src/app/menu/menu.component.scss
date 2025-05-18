@@ -1,97 +1,146 @@
-@import '../../styles.scss';
+@import '../../styles';
 
 .nav {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; // Alapértelmezett irány
   justify-content: space-between;
   align-items: center;
-  background-color: $primary;
-  padding: 0 20px;
-  color: $light;
+  background-color: var(--primary-color, #4A90E2); // Fallback szín, ha a CSS változó nem létezik
+  padding: 10px 20px; // Kisebb padding
+  color: var(--light-color, #F5F5F5);
+  position: fixed; // Hozzáadva, hogy a tetején maradjon
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; // Hogy más elemek fölött legyen
+  box-sizing: border-box; // A padding ne növelje a teljes szélességet/magasságot
+  height: 60px; // Fix magasság a menünek
+}
 
-  .cont {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
+.nav .cont { // A .nav-en belüli .cont-ra specifikusabb
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // Ez felel a cím és a hamburger közötti helyért
+  width: auto; // Ne legyen 100%, hogy a többi elem is elférjen
+}
 
-  .h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
+.nav .h1 { // A .nav-en belüli .h1-re specifikusabb
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0; // Eltávolítjuk az alapértelmezett margót
+  white-space: nowrap; // Ne törjön több sorba a cím
+}
 
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
+.nav .hamburger {
+  display: none; // Alapból rejtett nagyobb képernyőkön
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 10px; // Nagyobb érintési felület
+}
 
-    span {
-      display: block;
-      width: 25px;
-      height: 3px;
-      background-color: $light;
-    }
-  }
+.nav .hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--light-color, #F5F5F5);
+  border-radius: 3px;
+}
 
-  ul {
-    display: flex;
-    list-style: none;
-    gap: 10px;
-    padding: 0;
-    margin: 0;
+.nav ul {
+  display: flex;
+  flex-direction: row; // Alapból sorban
+  list-style: none;
+  gap: 5px; // Kisebb rés
+  padding: 0;
+  margin: 0;
+  align-items: center; // Vertikális igazítás
+}
 
-    a {
-      text-decoration: none;
-      color: $light;
+.nav ul a, .nav ul .logout-button { // Közös stílus a linkeknek és a logoutnak
+  text-decoration: none;
+  color: var(--light-color, #F5F5F5);
+  padding: 8px 15px; // Kisebb padding
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap; // Ne törjön több sorba
 
-      li {
-        cursor: pointer;
-        padding: 10px 20px;
-
-        &:hover {
-          background-color: $light-accent;
-          color: $dark;
-        }
-      }
-    }
-
-    &.open {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-    }
-  }
-
-  .user {
-    padding-left: 20px;
-    font-weight: bold;
-  }
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-
-    .hamburger {
-      display: flex;
-    }
-
-    .user {
-      display: none;
-
-      &.open {
-        display: block;
-      }
-    }
-
-    ul {
-      display: none;
-
-      &.open {
-        display: flex;
-      }
-    }
+  &:hover {
+    background-color: var(--light-accent-color, #E0E0E0);
+    color: var(--dark-color, #333333);
   }
 }
+
+.nav ul .logout-button {
+  background-color: transparent; // Illeszkedjen a többi menüponthoz
+  border: none;
+  font-size: inherit; // Örökölje a fontméretet
+  font-family: inherit; // Örökölje a fontcsaládot
+}
+
+.nav .user {
+  padding-left: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+  display: flex; // Hozzáadva
+  align-items: center; // Hozzáadva
+}
+
+// Mobil nézet (pl. 768px alatt)
+@media screen and (max-width: 768px) {
+  .nav {
+    flex-wrap: wrap; // Engedélyezzük a tördelést, ha szükséges
+    justify-content: space-between; // Hamburger jobbra, cím balra
+  }
+
+  .nav .cont {
+    width: 100%; // A cím és hamburger elfoglalja a teljes szélességet
+    margin-bottom: 0; // Nincs szükség extra margóra, ha a menü nyitva van
+  }
+
+  .nav .hamburger {
+    display: flex; // Megjelenítjük a hamburgert
+  }
+
+  .nav ul {
+    display: none; // Alapból rejtett mobil nézetben
+    flex-direction: column;
+    width: 100%; // Teljes szélesség, ha nyitva van
+    background-color: var(--primary-color, #4A90E2); // Háttér, ha lenyílik
+    position: absolute; // Pozicionálás a nav alá
+    top: 60px; // A nav magassága
+    left: 0;
+    right: 0;
+    padding: 10px 0; // Felső és alsó padding
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .nav ul.open {
+    display: flex; // Megjelenítjük, ha nyitva van
+  }
+
+  .nav ul a, .nav ul .logout-button {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center; // Középre igazítás mobil nézetben
+  }
+
+  .nav .user {
+    display: none; // Alapból rejtett mobil nézetben
+    width: 100%;   // Teljes szélesség, ha nyitva van
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid var(--light-accent-color, #E0E0E0); // Elválasztó vonal
+  }
+
+  .nav .user.open { // Ha a menü nyitva van, a felhasználói név is megjelenik
+    display: block;
+  }
+}
+
+// Annak biztosítása, hogy a tartalom ne csússzon a fix menü alá
+// Ezt a globális `styles.scss`-be vagy az `app.component.scss`-be tedd:
+// body {
+//   padding-top: 60px; /* A menü magassága */
+// }
+// Vagy az app-root utáni router-outlet-nek adj egy felső margót/paddinget.

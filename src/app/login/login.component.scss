@@ -9,13 +9,13 @@
 }
 
 .container {
-  border: 3px solid $light-accent;
+  border: 3px solid var(--light-accent-color);
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: $light;
+  background-color: var(--light-color);
 }
 
 .form-group {

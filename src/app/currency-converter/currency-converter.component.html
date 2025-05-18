@@ -1,35 +1,52 @@
 <main class="main">
   <div class="container">
-    <h1>Currency Converter</h1>
-    <div class="form-group">
-      <mat-form-field appearance="fill">
-        <mat-label>From</mat-label>
-        <mat-select [(value)]="fromCurrency">
-          <mat-option *ngFor="let currency of currencies" [value]="currency.name">
-            {{ currency.name }} ({{ currency.symbol }})
-          </mat-option>
-        </mat-select>
+    <h1>Valutaváltó</h1>
+
+    <div *ngIf="isLoadingCurrencies" class="spinner-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Devizák betöltése...</p>
+    </div>
+
+    <ng-container *ngIf="!isLoadingCurrencies">
+      <div class="converter-controls">
+        <mat-form-field appearance="fill" class="currency-selector">
+          <mat-label>Erről</mat-label>
+          <mat-select [(ngModel)]="fromCurrencyCode" (selectionChange)="convert()">
+            <mat-option *ngFor="let currency of availableCurrencies" [value]="currency.name">
+              {{ currency.name }} ({{ currency.symbol }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-icon-button (click)="swapCurrencies()" aria-label="Devizák felcserélése" class="swap-button">
+          <mat-icon>swap_horiz</mat-icon> </button>
+
+        <mat-form-field appearance="fill" class="currency-selector">
+          <mat-label>Erre</mat-label>
+          <mat-select [(ngModel)]="toCurrencyCode" (selectionChange)="convert()">
+            <mat-option *ngFor="let currency of availableCurrencies" [value]="currency.name">
+              {{ currency.name }} ({{ currency.symbol }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="fill" class="amount-input">
+        <mat-label>Összeg</mat-label>
+        <input matInput type="number" [(ngModel)]="amount" (ngModelChange)="convert()" />
       </mat-form-field>
-    </div>
-    <div class="form-group">
-      <mat-form-field appearance="fill">
-        <mat-label>To</mat-label>
-        <mat-select [(value)]="toCurrency">
-          <mat-option *ngFor="let currency of currencies" [value]="currency.name">
-            {{ currency.name }} ({{ currency.symbol }})
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="form-group">
-      <mat-form-field appearance="fill">
-        <mat-label>Amount</mat-label>
-        <input matInput type="number" [(ngModel)]="amount" />
-      </mat-form-field>
-    </div>
-    <div *ngIf="convertedAmount" class="result">
-      {{ convertedAmount | number:'1.2-2' }} {{ toCurrency }}
-    </div>
-    <button mat-raised-button color="primary" (click)="convert()">Convert</button>
+
+      <button mat-raised-button color="primary" (click)="convert()" [disabled]="isLoadingConversion">
+        <span *ngIf="!isLoadingConversion">Átváltás</span>
+        <span *ngIf="isLoadingConversion">Váltás...</span>
+      </button>
+
+      <div *ngIf="convertedAmount !== null && !isLoadingConversion" class="result">
+        <h2>{{ amount }} {{ fromCurrencyCode | currencySymbol }} = {{ convertedAmount | number:'1.2-5' }} {{ toCurrencyCode | currencySymbol }}</h2>
+      </div>
+      <div *ngIf="convertedAmount === null && !isLoadingConversion && amount != null" class="result error-message">
+        <p>Nem sikerült az átváltás. Ellenőrizd a devizákat.</p>
+      </div>
+    </ng-container>
   </div>
 </main>

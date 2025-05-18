@@ -24,12 +24,12 @@
 
   h2 {
     margin-top: 20px;
-    color: $dark;
+    color: var(--dark-color);
     text-align: center;
   }
 
   .result {
     margin-bottom: 20px;
-    color: $dark;
+    color: var(--dark-color);
   }
 }

@@ -34,7 +34,7 @@ p {
       align-items: center;
       justify-content: center;
       padding: 15px;
-      border: 2px solid $light-accent;
+      border: 2px solid var(--light-accent-color);
       width: 200px;
       text-align: center;
 
@@ -44,12 +44,12 @@ p {
       }
 
       .currency-symbol {
-        color: $dark;
+        color: var(--dark-color);
         margin-bottom: 10px;
       }
 
       .currency-converted {
-        color: $dark;
+        color: var(--dark-color);
       }
     }
   }

@@ -1,23 +1,54 @@
 <main class="main">
-    <div class="container">
-      <h1>RateInform</h1>
-      <p>Welcome to RateInform!<br>
+  <div class="container">
+    <h1>RateInform</h1>
+    <p>Welcome to RateInform!<br>
       We are here to help you with your rate information needs.<br>
-      Feel free to explore our features and let us know if you have any questions.</p>
+      Feel free to explore our features and let us know if you have any questions.
+    </p>
+  </div>
+
+  <div *ngIf="isLoggedIn && userProfile" class="container user-rates">
+    <h2>
+      Árfolyamok ehhez képest: {{ userProfile.favoriteCurrency }}
+      ({{ userProfile.favoriteCurrency | currencySymbol }}) </h2>
+
+    <div *ngIf="isLoadingRates" class="spinner-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Árfolyamok betöltése...</p>
     </div>
 
-      <div *ngIf="isLoggedIn" class="container">
-        <h2>Your Selected Currencies</h2>
-        <div class="currencies">
-        <div class="currency-card" *ngFor="let currency of currencyTable">
-          <div class="currency">
-            <div class="currency-symbol">{{ currency.symbol }}</div>
-            <div class="currency-name">{{ currency.name }}</div>
+    <div *ngIf="!isLoadingRates && displayedRates.length === 0 && userProfile.selectedCurrencies && userProfile.selectedCurrencies.length > 0" class="no-rates">
+      <p>Nem sikerült betölteni az árfolyamokat a kiválasztott devizákhoz.</p>
+      <p>Győződj meg róla, hogy a profilodban helyesen vannak beállítva a követett devizák.</p>
+    </div>
+
+    <div *ngIf="!isLoadingRates && userProfile.selectedCurrencies && userProfile.selectedCurrencies.length === 0" class="no-rates">
+      <p>Nincsenek kiválasztott követett devizák. Állítsd be őket a <a routerLink="/profile">profilodban</a>!</p>
+    </div>
+
+
+    <div *ngIf="!isLoadingRates && displayedRates.length > 0" class="currencies">
+      <mat-card *ngFor="let display of displayedRates" class="currency-card">
+        <mat-card-header>
+          <mat-card-title>{{ display.targetCurrencyName }} ({{ display.targetCurrencySymbol }})</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="display.isLoading" class="rate-loading">
+            <mat-spinner diameter="20"></mat-spinner>
           </div>
-          <div class="currency-converted">
-            {{ currency.convertedAmount | number: '1.2-2' }} {{ favoriteCurrency }}
+          <div *ngIf="!display.isLoading && display.rate !== undefined" class="currency-converted">
+            1 {{ display.favoriteCurrencySymbol }} = {{ display.rate | number: '1.2-5' }} {{ display.targetCurrencySymbol }}
           </div>
-        </div>
-      </div>
-      </div>
+          <div *ngIf="!display.isLoading && display.rate === undefined" class="rate-unavailable">
+            Árfolyam nem elérhető
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoggedIn" class="container">
+    <p>Jelentkezz be vagy regisztrálj a személyre szabott árfolyamok megtekintéséhez!</p>
+    <button mat-raised-button color="primary" routerLink="/login">Bejelentkezés</button>
+  </div>
 </main>

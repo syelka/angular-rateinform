@@ -8,12 +8,12 @@
     </div>
   </div>
   <ul [ngClass]="{'open': menuOpen}">
-    <a routerLink="/"><li>Home</li></a>
-    <a routerLink="/rates"><li>Rates</li></a>
-    <a routerLink="/profile"><li>Profile</li></a>
-    <a *ngIf="!isLoggedIn" routerLink="/login"><li>Login</li></a>
-  </ul>
-  <div [ngClass]="{'open': menuOpen}" class="user" *ngIf="isLoggedIn">
-    <span>{{ username }}</span>
+    <a routerLink="/" (click)="toggleMenu()"><li>Home</li></a>
+    <a routerLink="/rates" (click)="toggleMenu()"><li>Rates</li></a>
+    <a *ngIf="isLoggedIn" routerLink="/profile" (click)="toggleMenu()"><li>Profile</li></a>
+    <a *ngIf="!isLoggedIn" routerLink="/login" (click)="toggleMenu()"><li>Login</li></a>
+    <li *ngIf="isLoggedIn" (click)="logout()" class="logout-button">Logout</li> </ul>
+  <div [ngClass]="{'open': menuOpen}" class="user" *ngIf="isLoggedIn && username">
+    <span>Szia, {{ username }}!</span>
   </div>
 </nav>
